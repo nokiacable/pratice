@@ -1,0 +1,373 @@
+Git
+  Git to display files in stating area 
+
+git ls-files
+
+
+
+
+Git Remote
+
+
+git remote -v will show repository that configured 
+
+
+git remote https://github.com/nokiacable/pratice.git
+
+=================================================================================================================
+
+Note:We cannot reset hard to an directory we use clean -fd . for directory
+note git reset cannot touch untracked files
+
+
+
+
+
+
+
+
+
+
+git reset 
+
+--mixed
+--hard
+--soft
+
+
+git reset will <mode> <comment id>
+
+Moves Head to specific commit , and all remaining recent commit will be removed 
+mode will decided whether these changes are going to remove from staging area and working directory or not
+
+
+
+************************************************************
+[root@DESKTOP-ARTIPCB git]# git log --oneline***
+568eca0 (HEAD -> test) added hello to file
+c657c6b newloginpage
+b58b337 (master) i have removed a line
+63c6bfe installed VIM
+957098a Added few lines in file1
+0ec0a7b this is first commit
+***********************************************************************************************************
+
+
+GIT MIXED
+
+it is default mode 
+it will dicard commits in local repository and discard changes in statging area
+it will not touch working directory
+
+
+Note: We have to use before commit id in order to reset latest text file 
+
+***********************************************************************************************************
+Initialized empty Git repository in /home/jigya/gittest1/.git/
+[root@DESKTOP-ARTIPCB gittest1]# ll -al
+total 12
+drwxr-xr-x 3 root  root  4096 Mar 23 16:48 .
+drwx------ 7 jigya jigya 4096 Mar 23 16:48 ..
+drwxr-xr-x 7 root  root  4096 Mar 23 16:48 .git
+[root@DESKTOP-ARTIPCB gittest1]#
+[root@DESKTOP-ARTIPCB gittest1]# touch file1.txt file2.txt file3.txt
+[root@DESKTOP-ARTIPCB gittest1]# git add file1.txt
+[root@DESKTOP-ARTIPCB gittest1]# git add file2.txt
+[root@DESKTOP-ARTIPCB gittest1]# git add file3.txt
+[root@DESKTOP-ARTIPCB gittest1]# git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   file1.txt
+        new file:   file2.txt
+        new file:   file3.txt
+
+[root@DESKTOP-ARTIPCB gittest1]# git commit file1.txt -m "file1 commited"
+[master (root-commit) 38fff19] file1 commited
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 file1.txt
+[root@DESKTOP-ARTIPCB gittest1]# git ls-files
+file1.txt
+file2.txt
+file3.txt
+[root@DESKTOP-ARTIPCB gittest1]# git log
+commit 38fff19f2e6e091d07f240f7c14e2e1eb7c90c80 (HEAD -> master)
+Author: nokiacable <nokiacable123@gmail.com>
+Date:   Sat Mar 23 16:50:50 2024 +0530
+
+    file1 commited
+[root@DESKTOP-ARTIPCB gittest1]# git commit file2.txt -m "file2 commited"
+[master 48d3406] file2 commited
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 file2.txt
+[root@DESKTOP-ARTIPCB gittest1]# git commit file3.txt -m "file3 commited"
+[master 8ebc799] file3 commited
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 file3.txt
+[root@DESKTOP-ARTIPCB gittest1]# git log
+commit 8ebc799ba65c6eba27d44536332701669b9f7a65 (HEAD -> master)
+Author: nokiacable <nokiacable123@gmail.com>
+Date:   Sat Mar 23 16:51:48 2024 +0530
+
+    file3 commited
+
+commit 48d3406b9fa89e731daad625d31e64517ed0a10a
+Author: nokiacable <nokiacable123@gmail.com>
+Date:   Sat Mar 23 16:51:38 2024 +0530
+
+    file2 commited
+
+commit 38fff19f2e6e091d07f240f7c14e2e1eb7c90c80
+Author: nokiacable <nokiacable123@gmail.com>
+Date:   Sat Mar 23 16:50:50 2024 +0530
+
+    file1 commited
+[root@DESKTOP-ARTIPCB gittest1]# git log --oneline
+8ebc799 (HEAD -> master) file3 commited
+48d3406 file2 commited
+38fff19 file1 commited
+[root@DESKTOP-ARTIPCB gittest1]#
+
+
+[root@DESKTOP-ARTIPCB gittest1]# git reset --mixed 48d3406
+[root@DESKTOP-ARTIPCB gittest1]# git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        file3.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+[root@DESKTOP-ARTIPCB gittest1]#
+
+
+
+
+
+
+
+git --mixed <<commit-id>>
+
+git --mixed c657c6b
+
+
+
+
+
+
+
+
+
+is used to reset files which are tracked state/commited 
+
+
+
+
+[root@DESKTOP-ARTIPCB git]# git add file2
+
+[root@DESKTOP-ARTIPCB git]# git status
+On branch test
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   file2
+
+[root@DESKTOP-ARTIPCB git]# git reset file2
+
+[root@DESKTOP-ARTIPCB git]# git status
+On branch test
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        file2
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+
+===================================================================END======================================================================
+
+
+
+
+git soft 
+
+
+it is exactly as mixed option, but changes avilable in working directory as well as statging area 
+it wont touch statging area and working directory 
+as changes already present in staging area , just we have to use commit revert back.
+
+=============================================================================================================================================
+
+
+[root@DESKTOP-ARTIPCB gittest1]# git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        file3.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+[root@DESKTOP-ARTIPCB gittest1]# git add .;git commit -m file3.txt -m "this is file3"
+[master d6ab9ca] file3.txt
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 file3.txt
+[root@DESKTOP-ARTIPCB gittest1]#
+
+
+[root@DESKTOP-ARTIPCB gittest1]# git log --oneline
+d6ab9ca (HEAD -> master) file3.txt
+48d3406 file2 commited
+38fff19 file1 commited
+[root@DESKTOP-ARTIPCB gittest1]# git reset --soft 48d3406
+[root@DESKTOP-ARTIPCB gittest1]# git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   file3.txt
+
+[root@DESKTOP-ARTIPCB gittest1]#
+
+======================================================================================================================
+
+git reset hard
+
+
+git reset --hard <<commitid>>
+
+
+1.Changes will be discarded everywhere
+2.we cannot revert them
+3.working tree will be clean
+
+=====================================================================================================
+[root@DESKTOP-ARTIPCB gittest1]# git log --oneline
+d6ab9ca (HEAD -> master) file3.txt
+48d3406 file2 commited
+38fff19 file1 commited
+[root@DESKTOP-ARTIPCB gittest1]# git reset --soft 48d3406
+[root@DESKTOP-ARTIPCB gittest1]# git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   file3.txt
+
+[root@DESKTOP-ARTIPCB gittest1]#
+
+
+
+[root@DESKTOP-ARTIPCB git]# git status
+On branch test
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        1/
+        12/
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+
+[root@DESKTOP-ARTIPCB git]# git reset --hard
+HEAD is now at 568eca0 added hello to file
+
+
+[root@DESKTOP-ARTIPCB git]# git status
+On branch test
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        1/
+        12/
+
+nothing added to commit but untracked files present (use "git add" to track)
+[root@DESKTOP-ARTIPCB git]#
+
+
+
+================================================================================================================
+
+Git Clean
+
+
+
+git clean will delte file which are untracked 
+
+
+[root@DESKTOP-ARTIPCB git]# git status
+On branch test
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        1/
+        12/
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+
+[root@DESKTOP-ARTIPCB git]# git clean -fd .
+Removing 1/
+Removing 12/
+
+[root@DESKTOP-ARTIPCB git]# git status
+On branch test
+nothing to commit, working tree clean
+================================================================================================================
+
+Git Branches 
+
+
+master branch 
+developement branch
+test branch 
+     UAT branch 
+     permonce branch
+hotfix branch 
+feature branch
+release barnch
+
+
+shot lived branch 
+long lived branch
+
+
+
+There will Git admin who will send you an acoount username and password branch name of git 
+
+project url https://github.com/nokiacable/pratice.git
+
+
+Note:- 
+1.Project url will be same for all the branches 
+2.Only branch name will going to change based on the developer designation we will give access
+
+
+We will clone only once the repository remaining time we will use pull 
+
+
+Master branch
+git clone https://github.com/nokiacable/pratice.git
+
+Example
+git clone -b <<branch name>> https://github.com/nokiacable/pratice.git   
+
+Dev Branch cloned
+git clone -b dev https://github.com/nokiacable/pratice.git
+
+To push branch 
+git push origin dev
+===============================================================================================================================================
+
+
+Key Difference Between Git Fetch and Git Pull
+
+
+
+The main difference between Git Fetch and Git Pull:
+
+Git Fetch:
+
+Downloads latest changes from remote repo to local remote-tracking branches.
+Does not update local working directory.
+Does not cause merge conflicts.
+Git Pull:
+
+Downloads latest changes from remote repo and merges them into current branch.
+Updates local working directory.
+Can cause merge conflicts.
+In short, git fetch is a safer and more flexible option, while git pull is faster and easier to use, but it can lead to merge conflicts.
+
